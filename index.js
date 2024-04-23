@@ -52,8 +52,8 @@ camera.position.z = 3;
 function animate(t = 0) {
     // console.log(t) //Demonstrate how time passes
     requestAnimationFrame(animate);
-    // mesh.rotation.x += 0.01;
-    // mesh.rotation.y += 0.01;
+    mesh.rotation.x += 0.01;
+    mesh.rotation.y += 0.01;
     controls.update();
     renderer.render(scene, camera);
 };
