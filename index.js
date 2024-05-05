@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+var canvas = document.getElementById("myCanvas");
+
 const w = window.innerWidth;
 const h = window.innerHeight;
 
@@ -15,20 +17,18 @@ const far = 10;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
 // Set renderer to fit the browser's window size
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(w, h);
-// Append canvas to the window
-document.body.appendChild(renderer.domElement);
+const renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas, alpha: true });
+renderer.setSize(w/2.5, h/2.5);
 
-// Mouse controls
+// Mouse controls - Part 2
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.03;
 
 // Shapes - https://www.tutorialspoint.com/threejs/threejs_geometries.htm
-const geo = new THREE.SphereGeometry(2, 3, 2);
+const geo = new THREE.IcosahedronGeometry(1.0, 5);
 const mat = new THREE.MeshStandardMaterial({
-    color: 0x00ff00,
+    color: 0xff0000,
     flatShading: true, //Optional, shows facette
 });
 const mesh = new THREE.Mesh(geo, mat); // An object that takes the geometry and applies the material over it
@@ -52,8 +52,8 @@ camera.position.z = 3;
 function animate(t = 0) {
     // console.log(t) //Demonstrate how time passes
     requestAnimationFrame(animate);
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.01;
+    mesh.rotation.x = t/1000;
+    mesh.rotation.y = t/1000;
     controls.update();
     renderer.render(scene, camera);
 };
